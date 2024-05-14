@@ -65,4 +65,11 @@ public class Account
         Transfer transfer = new(_myCard[from - 1], _myCard[to - 1], amount);
         return transfer.ExecuteTransfer();
     }
+
+
+    public List<ICard> GetCards()
+    {
+        // Return the list of cards associated with this account
+        return new List<ICard>(_myCard);
+    }
 }

@@ -15,7 +15,7 @@ public class DebitCard(Client.Client owner) : Card(owner, 0.0)
 
     public override bool Withdraw(double amount)
     {
-        if (!(amount > 0) || !(amount <= Balance))
+        if (amount < 0 || amount >= Balance)
         {
             return false;
         }

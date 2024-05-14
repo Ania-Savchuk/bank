@@ -8,7 +8,7 @@ public class Vector<T>
 
     private void Resize(int newCapacity)
     {
-        T[] newData = new T[newCapacity];
+        var newData = new T[newCapacity];
         for (int i = 0; i < _size; ++i)
         {
             newData[i] = _data[i];
