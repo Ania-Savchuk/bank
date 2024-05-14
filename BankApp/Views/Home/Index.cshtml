@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Welcome to the Bank Application</h2>
+
+<div>
+    <p>
+        This is a simple bank application built using ASP.NET MVC.
+    </p>
+    <p>
+        You can perform the following actions:
+    </p>
+    <ul>
+        <li><a href="@Url.Action("Register", "Account")">Register an Account</a></li>
+        <li><a href="@Url.Action("Login", "Account")">Login to your Account</a></li>
+        <!-- Add more links for other actions as needed -->
+    </ul>
+</div>
+

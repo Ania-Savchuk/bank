@@ -1,0 +1,17 @@
+@using BankApp.Models.Account
+@model AccountChoice
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.AccountId)
+        @Html.ListBoxFor(m => m.AccountId, new SelectList(AccountData.DatabaseStub, "Value", "Text"))
+    </div>
+}
+
