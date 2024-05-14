@@ -1,12 +1,12 @@
 ﻿using BankApp.Models.Account;
 using BankApp.Models.Card;
 using BankApp.Models.Client;
+using BankApp.Models.TransferData;
+using Moq;
+using System.Collections.Generic;
 
 namespace BankTests;
 
-using NUnit.Framework;
-using Moq;
-using System.Collections.Generic;
 
 [TestFixture]
 public class AccountTests
@@ -70,6 +70,57 @@ public class AccountTests
         Assert.IsTrue(result);
         _mockCard.Verify(card => card.Deposit(amount), Times.Once);
     }
+    
+    [Test]
+    public void WithdrawMoney_WithValidCardNumberAndSufficientBalance_ShouldWithdrawMoney()
+    {
+        // Arrange
+        double initialBalance = 200.0;
+        double withdrawAmount = 100.0;
+        _mockCard.Setup(card => card.Balance).Returns(initialBalance);
+        _mockCard.Setup(card => card.Withdraw(withdrawAmount)).Returns(true);
+        _account.AddCard(_mockCard.Object);
+
+        // Act
+        bool result = _account.WithdrawMoney(1, withdrawAmount);
+
+        // Assert
+        Assert.IsTrue(result);
+        _mockCard.Verify(card => card.Withdraw(withdrawAmount), Times.Once);
+    }
+
+    [Test]
+    public void WithdrawMoney_WithInvalidCardNumber_ShouldNotWithdrawMoney()
+    {
+        // Arrange
+        _mockCard.Setup(card => card.Balance).Returns(0);
+        _account.AddCard(_mockCard.Object);
+
+        // Act
+        bool result = _account.WithdrawMoney(2, 100.0); // Using an invalid card number
+
+        // Assert
+        Assert.IsFalse(result);
+        _mockCard.Verify(card => card.Withdraw(It.IsAny<double>()), Times.Never);
+    }
+
+    [Test]
+    public void TransferMoney_WithInvalidCardNumbers_ShouldReturnWrongCardNumberStatus()
+    {
+        // Arrange
+        _account.AddCard(_mockCard.Object);
+        var mockDestinationCard = new Mock<ICard>();
+        _account.AddCard(mockDestinationCard.Object);
+
+        // Act
+        Transfer.TransferStatus result = _account.TransferMoney(0, 3, 100.0); // Using invalid card numbers
+
+        // Assert
+        Assert.AreEqual(Transfer.TransferStatus.WrongCardNumber, result);
+        _mockCard.Verify(card => card.Withdraw(It.IsAny<double>()), Times.Never);
+        mockDestinationCard.Verify(card => card.Deposit(It.IsAny<double>()), Times.Never);
+}
+
 
     // More tests can be added for other methods like WithdrawMoney, TransferMoney, etc.
 }

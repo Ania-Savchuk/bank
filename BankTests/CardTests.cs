@@ -140,4 +140,19 @@ public class CardTests
         // Assert
         Assert.IsFalse(withdrawResult);
     }
+
+    [Test]
+
+    public void Withdraw_NegativeAmount_ShouldReturnFalseAndNotChangeBalance()
+    {
+        // Arrange
+        double initialBalance = _card.Balance;
+
+        // Act
+        bool isWithdrawn = _card.Withdraw(-50.0);
+
+        // Assert
+        Assert.IsFalse(isWithdrawn);
+        Assert.AreEqual(initialBalance, _card.Balance);
+    }
 }

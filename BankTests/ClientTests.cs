@@ -2,52 +2,69 @@
 
 namespace BankTests;
 
-using NUnit.Framework;
-
 [TestFixture]
 public class ClientTests
 {
+    // private Client _client;
+    //
+    // [SetUp]
+    // public void Setup()
+    // {
+    //     // Arrange: Create a new instance of the Client class
+    //     _client = new Client("John", "Doe", 30);
+    // }
     private Client _client;
 
     [SetUp]
-    public void Setup()
+    public void SetUp()
     {
-        // Arrange: Create a new instance of the Client class
+        // Arrange
         _client = new Client("John", "Doe", 30);
     }
 
     [Test]
-    public void Constructor_WithValidArguments_ShouldSetProperties()
+    public void Constructor_Initializes_FirstName()
     {
-        // Arrange
-        string firstName = "John";
-        string lastName = "Doe";
-        int age = 30;
-
-        // Act: Already done in setup
+        // Act
+        string firstName = _client.FirstName;
 
         // Assert
-        Assert.AreEqual(firstName, _client.FirstName);
-        Assert.AreEqual(lastName, _client.LastName);
-        Assert.AreEqual(age, _client.Age);
+        Assert.That(firstName, Is.EqualTo("John"));
     }
 
     [Test]
-    public void Constructor_WithDefaultValues_ShouldSetPropertiesToDefaults()
+    public void Constructor_Initializes_LastName()
     {
-        // Arrange
-        string defaultFirstName = "";
-        string defaultLastName = "";
-        int defaultAge = 0;
-
-        // Act: Already done in setup
+        // Act
+        string lastName = _client.LastName;
 
         // Assert
-        var defaultClient = new Client(); // Creating a new client with default constructor
-        Assert.AreEqual(defaultFirstName, defaultClient.FirstName);
-        Assert.AreEqual(defaultLastName, defaultClient.LastName);
-        Assert.AreEqual(defaultAge, defaultClient.Age);
+        Assert.That(lastName, Is.EqualTo("Doe"));
     }
 
-    // Additional tests can be added for edge cases, validation, etc.
+    [Test]
+    public void Constructor_Initializes_Age()
+    {
+        // Act
+        int age = _client.Age;
+
+        // Assert
+        Assert.That(age, Is.EqualTo(30));
+    }
+
+    [Test]
+    public void Constructor_DefaultValues()
+    {
+        // Arrange
+        var defaultClient = new Client();
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(defaultClient.FirstName, Is.EqualTo(""));
+            Assert.That(defaultClient.LastName, Is.EqualTo(""));
+            Assert.That(defaultClient.Age, Is.EqualTo(0));
+        });
+    }
+
 }
