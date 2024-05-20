@@ -5,20 +5,12 @@ namespace BankTests;
 [TestFixture]
 public class ClientTests
 {
-    // private Client _client;
-    //
-    // [SetUp]
-    // public void Setup()
-    // {
-    //     // Arrange: Create a new instance of the Client class
-    //     _client = new Client("John", "Doe", 30);
-    // }
     private Client _client;
 
     [SetUp]
     public void SetUp()
     {
-        // Arrange
+        // Arrange  
         _client = new Client("John", "Doe", 30);
     }
 
@@ -66,5 +58,4 @@ public class ClientTests
             Assert.That(defaultClient.Age, Is.EqualTo(0));
         });
     }
-
 }

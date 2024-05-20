@@ -3,7 +3,7 @@ using BankApp.Models.Card;
 using BankApp.Models.Client;
 using BankApp.Models.TransferData;
 using Moq;
-using System.Collections.Generic;
+
 
 namespace BankTests;
 
@@ -52,7 +52,7 @@ public class AccountTests
         _account.AddCard(_mockCard.Object);
 
         // Assert
-        Assert.Contains(_mockCard.Object, ((List<ICard>)_account.GetCards()));
+        Assert.Contains(_mockCard.Object, _account.GetCards());
     }
 
     [Test]
@@ -119,8 +119,6 @@ public class AccountTests
         Assert.AreEqual(Transfer.TransferStatus.WrongCardNumber, result);
         _mockCard.Verify(card => card.Withdraw(It.IsAny<double>()), Times.Never);
         mockDestinationCard.Verify(card => card.Deposit(It.IsAny<double>()), Times.Never);
-}
-
-
-    // More tests can be added for other methods like WithdrawMoney, TransferMoney, etc.
+    }
+    
 }

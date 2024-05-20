@@ -3,15 +3,14 @@
 public class Account
 {
     private static long _lastUsedId = 0;
-    
+    //init - дозволяє встановлювати значення лише під час ініціалізації об'єкта.
     public long Id { get; init; }
     public Client.Client Client { get; init; }
     public string PhoneNumber { get; init; }
     // private readonly string _phoneNumber;
     private readonly IList<ICard> _myCard;
 
-    public Account()
-        : this(new Client.Client(), String.Empty) {}
+    public Account() : this(new Client.Client(), String.Empty) {}
     public Account(Client.Client user, string phoneNumber)
     {
         _lastUsedId += 1;
@@ -73,3 +72,4 @@ public class Account
         return new List<ICard>(_myCard);
     }
 }
+

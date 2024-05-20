@@ -61,5 +61,4 @@ public class TransferTests
         Assert.AreEqual(Transfer.TransferStatus.TooMuch, result);
     }
 
-    // Add more tests for other scenarios and edge cases
 }

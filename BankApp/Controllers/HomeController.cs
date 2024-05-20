@@ -1,5 +1,5 @@
 namespace BankApp.Controllers;
-
+//клас HomeController поставлений в залежність від інтерфейсу ILogger<HomeController> logger
 public class HomeController(ILogger<HomeController> logger) : Controller
 {
     public IActionResult Index()
@@ -20,8 +20,7 @@ public class HomeController(ILogger<HomeController> logger) : Controller
         return View(
             new ErrorViewModel
             {
-                RequestId = Activity.Current?.Id
-                            ?? HttpContext.TraceIdentifier
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             }
         );
     }

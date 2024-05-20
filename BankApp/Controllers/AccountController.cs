@@ -1,8 +1,10 @@
 using BankApp.Models.Client;
-
 namespace BankApp.Controllers;
 
 //DI -> ILogger<AccountController> logger
+//клас AccountController поставлений в залежність від інтерфейсу ILogger<AccountController> logger
+//фреймворк вирішує ці залежності і передає відповідні об'єкти
+//ILogger інтерфейс з бібліотеки фреймворку який використовується для логів(записи про дії програми)
 public class AccountController(ILogger<AccountController> logger) : Controller
 {
     // GET: AccountController
@@ -58,10 +60,7 @@ public class AccountController(ILogger<AccountController> logger) : Controller
             return View(model);
         }
 
-        Account? account = AccountData.DatabaseStub
-            .FirstOrDefault(
-                acc => acc.Id == model.AccountId
-            );
+        Account? account = AccountData.DatabaseStub.FirstOrDefault(acc => acc.Id == model.AccountId);
 
         if (account is null)
         {

@@ -4,18 +4,19 @@ namespace BankTests;
 
 using NUnit.Framework;
 
-[TestFixture]
+[TestFixture] //клас в якому знаходяться тести
 public class AccountChoiceTests
 {
     private AccountChoice _accountChoice;
 
-    [SetUp]
+    [SetUp] //ф-ія яка виконується перед кожним тестом 
     public void Setup()
     {
         _accountChoice = new AccountChoice();
     }
-
-    [Test]
+    
+    [Test] // тест(ф-ія яка щось тестує)
+    
     public void AccountId_WhenSetToValidValue_ShouldNotHaveValidationError()
     {
         // Arrange
@@ -25,7 +26,7 @@ public class AccountChoiceTests
         _accountChoice.AccountId = accountId;
 
         // Assert
-        Assert.AreEqual(accountId, _accountChoice.AccountId);
+        Assert.That(_accountChoice.AccountId, Is.EqualTo(accountId));
     }
 
     [Test]
@@ -38,7 +39,6 @@ public class AccountChoiceTests
         _accountChoice.AccountId = accountId;
 
         // Assert
-        Assert.AreEqual(accountId, _accountChoice.AccountId);
+        Assert.That(_accountChoice.AccountId, Is.EqualTo(accountId));
     }
-    // Add more tests as needed
 }

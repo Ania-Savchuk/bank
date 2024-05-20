@@ -1,9 +1,7 @@
 ﻿using BankApp.Models.Account;
-
 namespace BankTests;
-
 using NUnit.Framework;
-using System.Linq;
+
 
 [TestFixture]
 public class AccountDataTests
@@ -29,7 +27,7 @@ public class AccountDataTests
         AccountData.CurrentAccount = account;
 
         // Assert
-        Assert.AreEqual(account, AccountData.CurrentAccount);
+        Assert.That(AccountData.CurrentAccount, Is.EqualTo(account));
     }
 
     [Test]
@@ -54,8 +52,7 @@ public class AccountDataTests
         AccountData.CurrentAccount = account2;
 
         // Assert
-        Assert.AreEqual(account2, AccountData.CurrentAccount);
+        Assert.That(AccountData.CurrentAccount, Is.EqualTo(account2));
     }
 
-    // Additional tests can be added for more scenarios and edge cases
 }
