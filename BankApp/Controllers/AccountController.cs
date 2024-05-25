@@ -179,6 +179,13 @@ public class AccountController(ILogger<AccountController> logger) : Controller
             return NotFound();
         }
 
+        if (!ModelState.IsValid)
+        {
+            ViewBag.AccountId = model.AccountId;
+            ViewBag.Cards = account.GetCards();
+            return View(model);
+        }
+
         var fromCard = account.GetCards().FirstOrDefault(c => c.CardNumber == model.FromCardNumber);
         var toCard = account.GetCards().FirstOrDefault(c => c.CardNumber == model.ToCardNumber);
 
@@ -191,30 +198,37 @@ public class AccountController(ILogger<AccountController> logger) : Controller
         Transfer transfer = new(fromCard, toCard, model.Amount);
         var status = transfer.ExecuteTransfer();
 
-        switch (status)
-        {
-            case Transfer.TransferStatus.Success:
-                logger.LogInformation("Transfer completed successfully");
-                break;
-            case Transfer.TransferStatus.NotEnough:
-                ModelState.AddModelError("", "Not enough funds on the source card.");
-                break;
-            case Transfer.TransferStatus.TooMuch:
-                ModelState.AddModelError("", "Too much amount for the destination card.");
-                break;
-            case Transfer.TransferStatus.WrongCardNumber:
-                ModelState.AddModelError("", "Invalid card number.");
-                break;
-        }
+        // switch (status)
+        // {
+        //     case Transfer.TransferStatus.Success:
+        //         logger.LogInformation("Transfer completed successfully");
+        //         break;
+        //     case Transfer.TransferStatus.NotEnough:
+        //         ModelState.AddModelError("", "Not enough funds on the source card.");
+        //         break;
+        //     case Transfer.TransferStatus.TooMuch:
+        //         ModelState.AddModelError("", "Too much amount for the destination card.");
+        //         break;
+        //     case Transfer.TransferStatus.WrongCardNumber:
+        //         ModelState.AddModelError("", "Invalid card number.");
+        //         break;
+        // }
 
-        if (!ModelState.IsValid)
-        {
-            ViewBag.AccountId = model.AccountId;
-            ViewBag.Cards = account.GetCards();
-            return View(model);
-        }
+        ViewBag.OperationResult = status switch {
+            Transfer.TransferStatus.Success => "Transfer completed successfully",
+            Transfer.TransferStatus.NotEnough => "Not enough funds on the source card.",
+            Transfer.TransferStatus.TooMuch => "Too much amount for the destination card.",
+            Transfer.TransferStatus.WrongCardNumber => "Invalid card number.",
+            _ => throw new ApplicationException()
+        };
+        ViewBag.OperationTextColor = status switch {
+            Transfer.TransferStatus.Success => "text-success",
+            _ => "text-danger" // default case
+        };
+        ViewBag.AccountId = account.Id;
+        ViewBag.Cards = account.GetCards().ToList();
 
-        return RedirectToAction("AccountDetails", new { id = model.AccountId });
+        return View(model);
     }
 }
 

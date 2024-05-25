@@ -43,7 +43,7 @@ public class CreditCard : Card
 
     public override bool Withdraw(double amount)
     {
-        if (amount < 0 || amount > CreditLimit - Balance)
+        if (amount < 0 || amount > CreditLimit + Balance)
         {
             return false;
         }
