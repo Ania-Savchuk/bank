@@ -1,0 +1,41 @@
+@model BankApp.Models.Card.Card
+
+@{
+ViewData["Title"] = "Card Details";
+}
+
+<h2>Card Details</h2>
+
+<div>
+    <h4>Card Information</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Card Number</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.CardNumber)</dd>
+
+        <dt class="col-sm-2">Password</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Password)</dd>
+
+        <dt class="col-sm-2">IBAN</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Iban)</dd>
+
+        <dt class="col-sm-2">Balance</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Balance)</dd>
+
+        @if (Model is BankApp.Models.Card.CreditCard)
+        {
+        var creditCard = Model as BankApp.Models.Card.CreditCard;
+        <dt class="col-sm-2">Credit Limit</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(_ => creditCard.CreditLimit)</dd>
+
+        <dt class="col-sm-2">Interest Rate</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(_ => creditCard.InterestRate)</dd>
+
+        <dt class="col-sm-2">Monthly Contribution</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(_ => creditCard.MonthlyContribution)</dd>
+        }
+    </dl>
+</div>
+
+<div>
+    <a href="@Url.Action("AccountDetails", "Account", new { id = ViewBag.AccountId })" class="btn btn-secondary">Back to Account Details</a>
+</div>

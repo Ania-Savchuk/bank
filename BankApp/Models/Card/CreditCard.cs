@@ -6,8 +6,11 @@ public class CreditCard : Card
     private double _monthlyContribution;
 
     public double CreditLimit { get; init; }
+    public double MonthlyContribution => _monthlyContribution;
+    public double InterestRate => _interestRate;
+    
 
-    public CreditCard(Client.Client owner, double limit, double rate) : base(owner, 0.0)
+    public CreditCard(Client.Client owner, double limit, double rate) : base(owner, limit)
     {
         CreditLimit = limit;
         _interestRate = rate;

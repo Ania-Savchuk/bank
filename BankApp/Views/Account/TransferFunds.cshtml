@@ -1,0 +1,55 @@
+@model BankApp.Models.TransferData.TransferViewModel
+
+@{
+ViewData["Title"] = "Transfer Funds";
+var cards = ViewBag.Cards as List<BankApp.Models.Card.Card>;
+}
+
+<h2>Transfer Funds</h2>
+
+@if (cards == null || !cards.Any())
+{
+<p>No cards available to transfer funds.</p>
+}
+else
+{
+<div>
+    <h4>Transfer Details</h4>
+    <hr />
+    <form asp-action="TransferFunds" method="post">
+        <input type="hidden" asp-for="AccountId" />
+        <div class="form-group">
+            <label asp-for="FromCardNumber" class="control-label">From Card</label>
+            <select asp-for="FromCardNumber" class="form-control">
+                @foreach (var card in cards)
+                {
+                <option value="@card.CardNumber">@card.CardNumber</option>
+                }
+            </select>
+            <span asp-validation-for="FromCardNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ToCardNumber" class="control-label">To Card</label>
+            <select asp-for="ToCardNumber" class="form-control">
+                @foreach (var card in cards)
+                {
+                <option value="@card.CardNumber">@card.CardNumber</option>
+                }
+            </select>
+            <span asp-validation-for="ToCardNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Amount" class="control-label">Amount</label>
+            <input asp-for="Amount" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Transfer" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+}
+
+<div>
+    <a href="@Url.Action("AccountDetails", "Account", new { id = Model.AccountId })" class="btn btn-secondary">Back to Account Details</a>
+</div>

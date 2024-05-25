@@ -7,4 +7,6 @@ global using BankApp.Models.Account;
 global using BankApp.Models.Card;
 global using BankApp.Models.Generators;
 global using BankApp.Models.TransferData;
+global using BankApp.Models.Factories;
+global using BankApp.Models.Client;
 global using Microsoft.AspNetCore.Mvc;

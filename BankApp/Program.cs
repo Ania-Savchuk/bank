@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Register the singleton factory
+builder.Services.AddSingleton<ICardFactory>(CardFactorySingleton.Instance);
 // Add services to the container.
 //сервіси які будуть доступні в усій програмі
 builder.Services.AddControllersWithViews();

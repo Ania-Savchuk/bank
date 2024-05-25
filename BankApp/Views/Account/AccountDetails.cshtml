@@ -1,0 +1,85 @@
+@model BankApp.Models.Account.Account
+
+@{
+ViewData["Title"] = "Account Details";
+}
+
+<h2>Account Details</h2>
+
+<div>
+    <h4>Client Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            First Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            Last Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            Age
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.Age)
+        </dd>
+        <dt class="col-sm-2">
+            Phone Number
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Cards</h4>
+    @if (Model.GetCards().Any())
+    {
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Card Number</th>
+            <th>Type</th>
+            <th>Balance</th>
+            <th>Card Information</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var card in Model.GetCards())
+        {
+        <tr>
+            <td>@card.CardNumber</td>
+            <td>@(card is BankApp.Models.Card.CreditCard ? "Credit Card" : "Debit Card")</td>
+            <td>@card.Balance</td>
+            <td>
+                <a href="@Url.Action("CardDetails", "Account", new { accountId = Model.Id, cardNumber = card.CardNumber })">
+                    @(card is BankApp.Models.Card.CreditCard ? "Credit Card Information" : "Debit Card Information")
+                </a>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+    }
+    else
+    {
+    <p>No cards available.</p>
+    }
+</div>
+
+<div>
+    <h4>Actions</h4>
+    <div>
+        <a href="@Url.Action("AddCard", "Account", new { accountId = Model.Id })" class="btn btn-primary">Add Card</a>
+        <a href="@Url.Action("TransferFunds", "Account", new { accountId = Model.Id })" class="btn btn-primary">Transfer Funds</a>
+        <a href="#" class="btn btn-primary">Top Up Card</a>
+        <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+    </div>
+</div>
+ 

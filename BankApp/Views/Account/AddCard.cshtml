@@ -1,0 +1,20 @@
+@{
+ViewData["Title"] = "Add Card";
+long accountId = ViewBag.AccountId;
+}
+
+<h2>Add Card</h2>
+
+<div>
+    <form action="@Url.Action("AddCard", "Account", new { accountId = accountId })" method="post">
+        <div class="form-group">
+            <label for="cardType">Card Type</label>
+            <select id="cardType" name="cardType" class="form-control">
+                <option value="debit">Debit Card</option>
+                <option value="credit">Credit Card</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+    </form>
+</div>
